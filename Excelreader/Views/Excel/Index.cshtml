@@ -1,0 +1,75 @@
+﻿@model List<Excelreader.Models.ExcelData>
+
+
+@{
+    ViewBag.Title = "CSV Data";
+}
+
+<h2>CSV Data</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Segment</th>
+            <th>Country</th>
+            <th>Product</th>
+            <th>Discount Band</th>
+            <th>Units Sold</th>
+            <th>Manufacturing Price</th>
+            <th>Sale Price</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Segment</td>
+                <td>@item.Country</td>
+                <td>@item.Product</td>
+                <td>@item.DiscountBand</td>
+                <td>@item.UnitsSold</td>
+                <td>@item.ManufacturingPrice.Replace("�", "£")</td>
+                <td>@item.SalePrice.Replace("�","£")</td>
+                <td>@item.Date.ToString("yyyy-MM-dd")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    <ul class="pagination">
+        @for (int i = 1; i <= ViewBag.TotalPages; i++)
+        {
+            <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                <a class="page-link" href="@Url.Action("Index", new { page = i })">@i</a>
+            </li>
+        }
+    </ul>
+</div>
+
+<style>
+    .pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    .pagination a {
+        margin: 0 5px;
+        padding: 5px 10px;
+        border: 1px solid #ccc;
+        text-decoration: none;
+        color: #333;
+    }
+
+    .pagination a.active {
+        background-color: #007bff;
+        color: white;
+        border-color: #007bff;
+    }
+
+    .pagination a:hover {
+        background-color: #ddd;
+    }
+</style>
